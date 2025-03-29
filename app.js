@@ -147,6 +147,7 @@ class ImageAnimationSystem {
             <div class="layer-controls">
                 <button class="move-up">↑</button>
                 <button class="move-down">↓</button>
+                <button class="delete-layer">×</button>
             </div>
         `;
 
@@ -177,6 +178,20 @@ class ImageAnimationSystem {
                 this.layers.splice(index, 1);
                 this.layers.splice(index + 1, 0, layer);
                 layerList.insertBefore(layerItem, layerList.children[index + 2]);
+                this.render();
+            }
+        });
+
+        const deleteBtn = layerItem.querySelector('.delete-layer');
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const index = this.layers.indexOf(layer);
+            if (index !== -1) {
+                this.layers.splice(index, 1);
+                layerItem.remove();
+                if (this.selectedLayer === layer) {
+                    this.selectedLayer = null;
+                }
                 this.render();
             }
         });
