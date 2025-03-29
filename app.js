@@ -20,6 +20,8 @@ class ImageAnimationSystem {
         this.isDragging = false;
         this.dragStartX = 0;
         this.dragStartY = 0;
+        this.maintainAspectRatio = false;
+        this.aspectRatio = 1;
 
         this.setupEventListeners();
         this.render();
@@ -51,14 +53,47 @@ class ImageAnimationSystem {
 
         document.getElementById('width').addEventListener('change', (e) => {
             if (this.selectedLayer) {
-                this.selectedLayer.width = parseInt(e.target.value);
+                const newWidth = parseInt(e.target.value);
+                this.selectedLayer.width = newWidth;
+                if (this.maintainAspectRatio) {
+                    this.selectedLayer.height = Math.round(newWidth / this.aspectRatio);
+                    document.getElementById('height').value = this.selectedLayer.height;
+                }
                 this.render();
             }
         });
 
         document.getElementById('height').addEventListener('change', (e) => {
             if (this.selectedLayer) {
-                this.selectedLayer.height = parseInt(e.target.value);
+                const newHeight = parseInt(e.target.value);
+                this.selectedLayer.height = newHeight;
+                if (this.maintainAspectRatio) {
+                    this.selectedLayer.width = Math.round(newHeight * this.aspectRatio);
+                    document.getElementById('width').value = this.selectedLayer.width;
+                }
+                this.render();
+            }
+        });
+
+        document.getElementById('maintainAspectRatio').addEventListener('change', (e) => {
+            this.maintainAspectRatio = e.target.checked;
+            if (this.selectedLayer && this.maintainAspectRatio) {
+                this.aspectRatio = this.selectedLayer.width / this.selectedLayer.height;
+            }
+        });
+
+        document.getElementById('canvasWidth').addEventListener('change', (e) => {
+            const width = parseInt(e.target.value);
+            if (!isNaN(width) && width > 0) {
+                this.canvas.width = width;
+                this.render();
+            }
+        });
+
+        document.getElementById('canvasHeight').addEventListener('change', (e) => {
+            const height = parseInt(e.target.value);
+            if (!isNaN(height) && height > 0) {
+                this.canvas.height = height;
                 this.render();
             }
         });
