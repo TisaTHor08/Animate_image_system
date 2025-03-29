@@ -144,9 +144,43 @@ class ImageAnimationSystem {
         layerItem.innerHTML = `
             <input type="checkbox" checked>
             <span>${layer.name}</span>
+            <div class="layer-controls">
+                <button class="move-up">↑</button>
+                <button class="move-down">↓</button>
+            </div>
         `;
 
-        layerItem.addEventListener('click', () => this.selectLayer(layer));
+        layerItem.addEventListener('click', (e) => {
+            if (!e.target.matches('button')) {
+                this.selectLayer(layer);
+            }
+        });
+
+        const moveUpBtn = layerItem.querySelector('.move-up');
+        const moveDownBtn = layerItem.querySelector('.move-down');
+
+        moveUpBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const index = this.layers.indexOf(layer);
+            if (index > 0) {
+                this.layers.splice(index, 1);
+                this.layers.splice(index - 1, 0, layer);
+                layerList.insertBefore(layerItem, layerList.children[index - 1]);
+                this.render();
+            }
+        });
+
+        moveDownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const index = this.layers.indexOf(layer);
+            if (index < this.layers.length - 1) {
+                this.layers.splice(index, 1);
+                this.layers.splice(index + 1, 0, layer);
+                layerList.insertBefore(layerItem, layerList.children[index + 2]);
+                this.render();
+            }
+        });
+
         layerList.appendChild(layerItem);
     }
 
