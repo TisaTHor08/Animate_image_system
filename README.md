@@ -18,31 +18,6 @@ Un outil web élégant et intuitif pour créer, éditer et animer des images ave
 
 ---
 
-## 🚀 Prise en Main
-
-### ✅ Prérequis
-
-- Un navigateur web moderne (**Chrome, Firefox, Safari ou Edge**).
-- Un serveur de développement local (par exemple, **le serveur intégré de Python** ou tout autre serveur HTTP).
-
-### 📌 Lancer l'Application
-
-1. **Clonez le dépôt** sur votre machine locale :
-   ```bash
-   git clone <url-du-dépôt>
-   ```
-2. **Accédez** au répertoire du projet :
-   ```bash
-   cd Image-Animation-System
-   ```
-3. **Démarrez un serveur local** (par exemple, avec Python) :
-   ```bash
-   python -m http.server 8000
-   ```
-4. **Ouvrez votre navigateur** et visitez : `http://localhost:8000`
-
----
-
 ## 🎥 Guide d'Utilisation
 
 1. **Importer des Images** :
